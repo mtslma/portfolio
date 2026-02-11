@@ -1,123 +1,119 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Em construção</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mateus Lima</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+        body {
+            height: 100vh;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #1a1a1a;
+        }
 
-body {
-  height: 100vh;
-  background: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #111;
-  overflow: hidden;
-  animation: backgroundBreath 8s ease-in-out infinite;
-}
+        .container {
+            text-align: center;
+        }
 
-@keyframes backgroundBreath {
-  0%,100% { background: #ffffff; }
-  50% { background: #f7f7f7; }
-}
+        /* Nome minimalista com espaçamento dinâmico */
+        .name-wrap {
+            display: flex;
+            justify-content: center;
+            gap: 0px;
+            cursor: default;
+        }
 
-.container {
-  text-align: center;
-  max-width: 500px;
-}
+        .name-wrap span {
+            font-size: clamp(2rem, 10vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -1px;
+            transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1), margin 0.4s ease;
+        }
 
-h1 {
-  font-weight: 300;
-  font-size: 2.5rem;
-  letter-spacing: 3px;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeUp 1.5s ease forwards;
-}
+        /* Efeito de afastamento suave ao passar o mouse */
+        .name-wrap:hover span {
+            margin: 0 4px;
+            color: #6a5cff;
+        }
 
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+        .subtitle {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: #999;
+            text-transform: uppercase;
+            height: 20px;
+            transition: opacity 0.3s ease;
+        }
 
-.subtitle {
-  margin-top: 20px;
-  font-size: 1rem;
-  color: #666;
-  min-height: 24px;
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
+        /* Cursor customizado opcional - só um detalhe */
+        .dot {
+            width: 4px;
+            height: 4px;
+            background: #6a5cff;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 5px;
+            animation: blink 1s infinite;
+        }
 
-.cursor {
-  display: inline-block;
-  width: 1px;
-  background: #111;
-  margin-left: 4px;
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0; }
-}
-
-.line {
-  width: 0;
-  height: 1px;
-  background: #111;
-  margin: 30px auto;
-  animation: lineGrow 1.8s ease forwards 0.8s;
-}
-
-@keyframes lineGrow {
-  to { width: 60px; }
-}
-</style>
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="container">
-  <h1>em construção<span class="cursor"></span></h1>
-  <div class="line"></div>
-  <div class="subtitle" id="dynamicText"></div>
+    <div class="name-wrap" id="name">
+        </div>
+    <div class="subtitle" id="msg"></div>
 </div>
 
 <script>
-const texts = [
-  "Estamos preparando algo diferente.",
-  "Não é só mais um site.",
-  "Ideias estão tomando forma.",
-  "Volte em breve.",
-  "Você vai entender."
-];
+    const nameStr = "mtslma";
+    const nameContainer = document.getElementById('name');
 
-const element = document.getElementById("dynamicText");
-let index = 0;
+    nameStr.split('').forEach(char => {
+        const span = document.createElement('span');
+        span.textContent = char === " " ? "\u00A0" : char;
+        nameContainer.appendChild(span);
+    });
 
-function changeText() {
-  element.style.opacity = 0;
-  element.style.transform = "translateY(10px)";
-  
-  setTimeout(() => {
-    element.textContent = texts[index];
-    element.style.opacity = 1;
-    element.style.transform = "translateY(0)";
-    index = (index + 1) % texts.length;
-  }, 500);
-}
+    const quotes = [
+        "abacate",
+        "calma bobbie que tá goods",
+        "vivendo em uma simulação",
+        "dormindo",
+        "aprendendo a ver cor"
+    ];
 
-setInterval(changeText, 3000);
-changeText();
+    const msgElement = document.getElementById('msg');
+    let i = 0;
+
+    function nextMsg() {
+        msgElement.style.opacity = 0;
+        setTimeout(() => {
+            msgElement.innerHTML = quotes[i] + '<span class="dot"></span>';
+            msgElement.style.opacity = 1;
+            i = (i + 1) % quotes.length;
+        }, 500);
+    }
+
+    setInterval(nextMsg, 4000);
+    nextMsg();
 </script>
 
 </body>
